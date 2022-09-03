@@ -8,7 +8,7 @@
 #include "model/Term.hpp"
 #include "model/Variable.hpp"
 
-#include <common/logging.h>
+#include <common/logging.hpp>
 
 #include <algorithm>
 #include <bits/ranges_algo.h>

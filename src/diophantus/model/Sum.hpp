@@ -6,12 +6,12 @@
 #include <diophantus/model/numeric/GmpBigInt.hpp>
 #include <diophantus/model/numeric/BigInt.hpp>
 
-#include <ios>
-#include <logging.h>
+#include <logging.hpp>
 
 #include <algorithm>
 #include <bits/ranges_algo.h>
 #include <execution>
+#include <ios>
 #include <optional>
 #include <pstl/glue_algorithm_defs.h>
 #include <pstl/glue_execution_defs.h>

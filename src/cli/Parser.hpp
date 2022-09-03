@@ -9,7 +9,7 @@
 #include <diophantus/model/EquationSystem.hpp>
 #include <diophantus/model/numeric/BigInt.hpp>
 
-#include <logging.h>
+#include <logging.hpp>
 
 #include <functional>
 #include <filesystem>

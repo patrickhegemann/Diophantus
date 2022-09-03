@@ -10,7 +10,7 @@
 #include <diophantus/model/Equation.hpp>
 #include <diophantus/model/EquationSystem.hpp>
 
-#include <common/logging.h>
+#include <common/logging.hpp>
 
 #include <gtest/gtest.h>
 

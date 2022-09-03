@@ -6,7 +6,7 @@
 #include "diophantus/model/Variable.hpp"
 #include "diophantus/model/numeric/GmpBigInt.hpp"
 
-#include <common/logging.h>
+#include <common/logging.hpp>
 
 #include <algorithm>
 #include <bits/ranges_algo.h>

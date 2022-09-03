@@ -8,7 +8,7 @@
 #include "numeric/GmpBigInt.hpp"
 #include "numeric/BigInt.hpp"
 
-#include <logging.h>
+#include <logging.hpp>
 
 #include <algorithm>
 #include <execution>
