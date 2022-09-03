@@ -70,40 +70,40 @@ TEST(GmpBigIntTest, GCD)
 
 TEST(GmpBigIntTest, ModOffset)
 {
-    EXPECT_EQ(Number::modOffset(Number(10), Number(5)), 0);
-    EXPECT_EQ(Number::modOffset(Number(11), Number(5)), 1);
-    EXPECT_EQ(Number::modOffset(Number(12), Number(5)), 2);
-    EXPECT_EQ(Number::modOffset(Number(13), Number(5)), -2);
-    EXPECT_EQ(Number::modOffset(Number(14), Number(5)), -1);
-    EXPECT_EQ(Number::modOffset(Number(15), Number(5)), 0);
+    EXPECT_EQ(Number::symMod(Number(10), Number(5)), 0);
+    EXPECT_EQ(Number::symMod(Number(11), Number(5)), 1);
+    EXPECT_EQ(Number::symMod(Number(12), Number(5)), 2);
+    EXPECT_EQ(Number::symMod(Number(13), Number(5)), -2);
+    EXPECT_EQ(Number::symMod(Number(14), Number(5)), -1);
+    EXPECT_EQ(Number::symMod(Number(15), Number(5)), 0);
 
-    EXPECT_EQ(Number::modOffset(Number(-10), Number(5)), 0);
-    EXPECT_EQ(Number::modOffset(Number(-11), Number(5)), -1);
-    EXPECT_EQ(Number::modOffset(Number(-12), Number(5)), -2);
-    EXPECT_EQ(Number::modOffset(Number(-13), Number(5)), 2);
-    EXPECT_EQ(Number::modOffset(Number(-14), Number(5)), 1);
-    EXPECT_EQ(Number::modOffset(Number(-15), Number(5)), 0);
+    EXPECT_EQ(Number::symMod(Number(-10), Number(5)), 0);
+    EXPECT_EQ(Number::symMod(Number(-11), Number(5)), -1);
+    EXPECT_EQ(Number::symMod(Number(-12), Number(5)), -2);
+    EXPECT_EQ(Number::symMod(Number(-13), Number(5)), 2);
+    EXPECT_EQ(Number::symMod(Number(-14), Number(5)), 1);
+    EXPECT_EQ(Number::symMod(Number(-15), Number(5)), 0);
 
-    EXPECT_EQ(Number::modOffset(Number(12), Number(6)), 0);
-    EXPECT_EQ(Number::modOffset(Number(13), Number(6)), 1);
-    EXPECT_EQ(Number::modOffset(Number(14), Number(6)), 2);
-    EXPECT_EQ(Number::modOffset(Number(15), Number(6)), -3);
-    EXPECT_EQ(Number::modOffset(Number(16), Number(6)), -2);
-    EXPECT_EQ(Number::modOffset(Number(17), Number(6)), -1);
-    EXPECT_EQ(Number::modOffset(Number(18), Number(6)), 0);
+    EXPECT_EQ(Number::symMod(Number(12), Number(6)), 0);
+    EXPECT_EQ(Number::symMod(Number(13), Number(6)), 1);
+    EXPECT_EQ(Number::symMod(Number(14), Number(6)), 2);
+    EXPECT_EQ(Number::symMod(Number(15), Number(6)), -3);
+    EXPECT_EQ(Number::symMod(Number(16), Number(6)), -2);
+    EXPECT_EQ(Number::symMod(Number(17), Number(6)), -1);
+    EXPECT_EQ(Number::symMod(Number(18), Number(6)), 0);
 
-    EXPECT_EQ(Number::modOffset(Number(-12), Number(6)), 0);
-    EXPECT_EQ(Number::modOffset(Number(-13), Number(6)), -1);
-    EXPECT_EQ(Number::modOffset(Number(-14), Number(6)), -2);
-    EXPECT_EQ(Number::modOffset(Number(-15), Number(6)), -3);
-    EXPECT_EQ(Number::modOffset(Number(-16), Number(6)), 2);
-    EXPECT_EQ(Number::modOffset(Number(-17), Number(6)), 1);
-    EXPECT_EQ(Number::modOffset(Number(-18), Number(6)), 0);
+    EXPECT_EQ(Number::symMod(Number(-12), Number(6)), 0);
+    EXPECT_EQ(Number::symMod(Number(-13), Number(6)), -1);
+    EXPECT_EQ(Number::symMod(Number(-14), Number(6)), -2);
+    EXPECT_EQ(Number::symMod(Number(-15), Number(6)), -3);
+    EXPECT_EQ(Number::symMod(Number(-16), Number(6)), 2);
+    EXPECT_EQ(Number::symMod(Number(-17), Number(6)), 1);
+    EXPECT_EQ(Number::symMod(Number(-18), Number(6)), 0);
 
-    EXPECT_EQ(Number::modOffset(Number(12), Number(8)), -4);
-    EXPECT_EQ(Number::modOffset(Number(17), Number(8)), 1);
+    EXPECT_EQ(Number::symMod(Number(12), Number(8)), -4);
+    EXPECT_EQ(Number::symMod(Number(17), Number(8)), 1);
 
-    ASSERT_EXIT(Number::modOffset(Number(5), Number(0)),
+    ASSERT_EXIT(Number::symMod(Number(5), Number(0)),
                 testing::KilledBySignal(SIGFPE), ".*");
 }
 

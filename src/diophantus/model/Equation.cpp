@@ -113,7 +113,7 @@ namespace diophantus::model
         DeducedEquation<NumT> newEquation = this->solveFor(term, false);
         newEquation.coefficientsModulo(modulus);
         newEquation.addTerm(Term<NumT>(-modulus, newVariable));
-        NumT newConstant = -NumT::modOffset(newEquation.getRightSideConstant(), modulus);
+        NumT newConstant = -NumT::symMod(newEquation.getRightSideConstant(), modulus);
         newEquation.setRightSideConstant(newConstant);
 
         return newEquation;

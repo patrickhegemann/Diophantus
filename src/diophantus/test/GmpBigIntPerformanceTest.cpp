@@ -21,7 +21,7 @@ TEST(GmpBigIntPerformanceTest, ModuloTestMeasureTime)
     auto startTime = std::chrono::steady_clock::now();
     
     for (unsigned int i = 0; i < nCalls; ++i) {
-        Number::modOffset(ints[i], modulus);
+        Number::symMod(ints[i], modulus);
     }
 
     auto endTime = std::chrono::steady_clock::now();

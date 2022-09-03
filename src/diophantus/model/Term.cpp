@@ -45,7 +45,7 @@ namespace diophantus::model
     template <numeric::BigInt NumT>
     void Term<NumT>::coefficientMod(const NumT& modulus)
     {
-        coefficient = NumT::modOffset(coefficient, modulus);
+        coefficient = NumT::symMod(coefficient, modulus);
     }
 
     template <numeric::BigInt NumT>

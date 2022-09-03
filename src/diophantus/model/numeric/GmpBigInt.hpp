@@ -61,6 +61,11 @@ namespace diophantus::model::numeric
                 return GmpBigInt(value + other.value);
             }
 
+            GmpBigInt operator-(const GmpBigInt& other) const
+            {
+                return GmpBigInt(value - other.value);
+            }
+
             GmpBigInt operator*(const GmpBigInt& other) const
             {
                 return GmpBigInt(value * other.value);
@@ -111,17 +116,22 @@ namespace diophantus::model::numeric
                 return GmpBigInt(gcd);
             }
 
-            // Calculate modulo with offset b/2
-            static const GmpBigInt modOffset(const GmpBigInt& a, const GmpBigInt& b)
+            // Calculate symmetric modulo
+            static const GmpBigInt symMod(const GmpBigInt& a, const GmpBigInt& b)
             {
-                // // TODO: This has problematically bad performance
-                mpf_class aFloat(a.value);
-                mpf_class bFloat(b.value);
-                mpf_class c = aFloat / bFloat + 0.5f;
-                mpf_floor(c.get_mpf_t(), c.get_mpf_t());
-                c = aFloat - bFloat * c;
-                mpz_class mod(c);
-                return GmpBigInt(mod);
+                mpf_class halfB(b.value);
+                halfB /= 2;
+
+                mpz_class aModB;
+                mpz_mod(aModB.get_mpz_t(), a.value.get_mpz_t(), b.value.get_mpz_t());
+                if (aModB < halfB)
+                {
+                    return GmpBigInt(aModB);
+                }
+                else
+                {
+                    return GmpBigInt(aModB) - b;
+                }
             }
 
             static size_t nDigits(const GmpBigInt& a)

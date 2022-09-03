@@ -21,7 +21,7 @@ namespace diophantus::model::numeric
     concept Arithmetic = requires(Number a, Number b)
     {
         a + b;
-        // a - b;
+        a - b;
         a * b;
         // a / b;
         a % b;
@@ -35,7 +35,7 @@ namespace diophantus::model::numeric
 
         Number::abs(a);             // Get absolute value
         Number::gcd(a, b);          // Calculate greatest common divisor
-        Number::modOffset(a, b);    // Calculate modulo with offset b/2 ("symmetric modulo")
+        Number::symMod(a, b);       // Calculate symmetric modulo
     };
 
     template<typename Number>
