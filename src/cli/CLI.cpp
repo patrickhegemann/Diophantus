@@ -6,7 +6,7 @@
 #include <diophantus/model/numeric/GmpBigInt.hpp>
 #include <diophantus/model/EquationSystem.hpp>
 
-#include <logging.h>
+#include <logging.hpp>
 
 #include <argparse/argparse.hpp>
 
