@@ -69,10 +69,10 @@ namespace diophantus::model
         std::vector<Term<NumT>> newTerms;
 
         // Copy all terms that do not have the same variable
-        const auto& variableNumber = term.getVariable()->variableNumber;
+        const auto& variableNumber = term.getVariable();
         auto isDifferentVariable = [variableNumber](const Term<NumT>& srcTerm)
         {
-            return (srcTerm.getVariable()->variableNumber != variableNumber);
+            return (srcTerm.getVariable() != variableNumber);
         };
         std::copy_if(std::execution::par,
                      leftSide.getTerms().begin(), leftSide.getTerms().end(),
@@ -106,7 +106,7 @@ namespace diophantus::model
 
     template <numeric::BigInt NumT>
     DeducedEquation<NumT> Equation<NumT>::eliminate(const Term<NumT>& term,
-                                                    const std::shared_ptr<Variable> newVariable)
+                                                    const Variable newVariable)
     {
         NumT modulus(std::move(term.getCoefficient() + NumT(1)));
 
@@ -153,8 +153,7 @@ namespace diophantus::model
                 ++etIterator;
             }
             else if(dtIterator != deducedTerms.end() && (etIterator == equationTerms.end()
-                || dtIterator->getVariable()->variableNumber
-                 < etIterator->getVariable()->variableNumber))
+                || dtIterator->getVariable() < etIterator->getVariable()))
             {
                 Term<NumT> term(dtIterator->getCoefficient() * varCoefficient.value(),
                                 dtIterator->getVariable());

@@ -185,13 +185,13 @@ TEST(EquationTest, Invert)
     EXPECT_EQ(newTerms.size(), equation.getLeftSide().getTerms().size());
 
     EXPECT_EQ(newTerms[0].getCoefficient(), 4);
-    EXPECT_EQ(newTerms[0].getVariable()->variableNumber, 0);
+    EXPECT_EQ(newTerms[0].getVariable(), 0);
 
     EXPECT_EQ(newTerms[1].getCoefficient(), -8);
-    EXPECT_EQ(newTerms[1].getVariable()->variableNumber, 1);
+    EXPECT_EQ(newTerms[1].getVariable(), 1);
 
     EXPECT_EQ(newTerms[2].getCoefficient(), -7);
-    EXPECT_EQ(newTerms[2].getVariable()->variableNumber, 2);
+    EXPECT_EQ(newTerms[2].getVariable(), 2);
 }
 
 TEST(EquationTest, SolveFor)
@@ -219,10 +219,10 @@ TEST(EquationTest, SolveFor)
     //      - equaton.getTermOfVariable ?
     //      - variable.terms.at(equation)->getCoefficient() ?
     EXPECT_EQ(rightSideTerms[0].getCoefficient(), -5);
-    EXPECT_EQ(rightSideTerms[0].getVariable()->variableNumber, 1);
+    EXPECT_EQ(rightSideTerms[0].getVariable(), 1);
 
     EXPECT_EQ(rightSideTerms[1].getCoefficient(), 4);
-    EXPECT_EQ(rightSideTerms[1].getVariable()->variableNumber, 2);
+    EXPECT_EQ(rightSideTerms[1].getVariable(), 2);
 }
 
 TEST(EquationTest, SolveForWithInversion)
@@ -249,10 +249,10 @@ TEST(EquationTest, SolveForWithInversion)
     EXPECT_EQ(rightSideTerms.size(), equation.getLeftSide().getTerms().size() - 1);
 
     EXPECT_EQ(rightSideTerms[0].getCoefficient(), 5);
-    EXPECT_EQ(rightSideTerms[0].getVariable()->variableNumber, 1);
+    EXPECT_EQ(rightSideTerms[0].getVariable(), 1);
 
     EXPECT_EQ(rightSideTerms[1].getCoefficient(), -4);
-    EXPECT_EQ(rightSideTerms[1].getVariable()->variableNumber, 2);
+    EXPECT_EQ(rightSideTerms[1].getVariable(), 2);
 }
 
 TEST(EquationTest, Eliminate)
@@ -276,13 +276,13 @@ TEST(EquationTest, Eliminate)
     EXPECT_EQ(rightSideTerms.size(), equation.getLeftSide().getTerms().size());
 
     EXPECT_EQ(rightSideTerms[0].getCoefficient(), -4);
-    EXPECT_EQ(rightSideTerms[0].getVariable()->variableNumber, 1);
+    EXPECT_EQ(rightSideTerms[0].getVariable(), 1);
 
     EXPECT_EQ(rightSideTerms[1].getCoefficient(), -1);
-    EXPECT_EQ(rightSideTerms[1].getVariable()->variableNumber, 2);
+    EXPECT_EQ(rightSideTerms[1].getVariable(), 2);
 
     EXPECT_EQ(rightSideTerms[2].getCoefficient(), -8);
-    EXPECT_EQ(rightSideTerms[2].getVariable()->variableNumber, 3);
+    EXPECT_EQ(rightSideTerms[2].getVariable(), 3);
 }
 
 TEST(EquationTest, SubstituteByAssignment)
@@ -309,13 +309,13 @@ TEST(EquationTest, SubstituteByAssignment)
     EXPECT_EQ(leftSideTerms.size(), 3);
 
     EXPECT_EQ(leftSideTerms[0].getCoefficient(), 7);
-    EXPECT_EQ(leftSideTerms[0].getVariable()->variableNumber, 0);
+    EXPECT_EQ(leftSideTerms[0].getVariable(), 0);
 
     EXPECT_EQ(leftSideTerms[1].getCoefficient(), 0);
-    EXPECT_EQ(leftSideTerms[1].getVariable()->variableNumber, 1);
+    EXPECT_EQ(leftSideTerms[1].getVariable(), 1);
 
     EXPECT_EQ(leftSideTerms[2].getCoefficient(), 31);
-    EXPECT_EQ(leftSideTerms[2].getVariable()->variableNumber, 2);
+    EXPECT_EQ(leftSideTerms[2].getVariable(), 2);
 }
 
 TEST(EquationTest, SubstituteByDeducedEquation)
@@ -341,11 +341,11 @@ TEST(EquationTest, SubstituteByDeducedEquation)
     EXPECT_EQ(leftSideTerms.size(), 3);
 
     EXPECT_EQ(leftSideTerms[0].getCoefficient(), -2);
-    EXPECT_EQ(leftSideTerms[0].getVariable()->variableNumber, 1);
+    EXPECT_EQ(leftSideTerms[0].getVariable(), 1);
 
     EXPECT_EQ(leftSideTerms[1].getCoefficient(), 3);
-    EXPECT_EQ(leftSideTerms[1].getVariable()->variableNumber, 2);
+    EXPECT_EQ(leftSideTerms[1].getVariable(), 2);
 
     EXPECT_EQ(leftSideTerms[2].getCoefficient(), -7);
-    EXPECT_EQ(leftSideTerms[2].getVariable()->variableNumber, 3);
+    EXPECT_EQ(leftSideTerms[2].getVariable(), 3);
 }

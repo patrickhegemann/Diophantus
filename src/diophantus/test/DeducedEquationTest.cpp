@@ -35,7 +35,7 @@ class DeducedEquationTest:
             deducedEquation = std::make_unique<DeducedEquation>(variables[0], sum, NumT(3));
         }
 
-        std::vector<std::shared_ptr<Variable>> variables;
+        std::vector<Variable> variables;
         std::unique_ptr<DeducedEquation> deducedEquation;
 };
 
@@ -57,7 +57,7 @@ TEST_F(DeducedEquationTest, AddTerm)
     constexpr unsigned int newVarNumber = 3;
     constexpr long coefficient = 17;
 
-    auto newVar = std::make_shared<Variable>(newVarNumber);
+    auto newVar = newVarNumber;
     Term t(coefficient, newVar);
 
     const auto& rightSideTerms = deducedEquation->getRightSideSum().getTerms();
@@ -67,7 +67,7 @@ TEST_F(DeducedEquationTest, AddTerm)
 
     EXPECT_EQ(rightSideTerms.size(), sizeBefore + 1);
     EXPECT_EQ(rightSideTerms.back().getCoefficient(), coefficient);
-    EXPECT_EQ(rightSideTerms.back().getVariable()->variableNumber, newVarNumber);
+    EXPECT_EQ(rightSideTerms.back().getVariable(), newVarNumber);
 }
 
 TEST_F(DeducedEquationTest, Substitute)
@@ -83,7 +83,7 @@ TEST_F(DeducedEquationTest, Substitute)
 
     const auto& rightSideTerms = deducedEquation->getRightSideSum().getTerms();
     EXPECT_EQ(rightSideTerms[0].getCoefficient(), 0);
-    EXPECT_EQ(rightSideTerms[0].getVariable()->variableNumber, 1);
+    EXPECT_EQ(rightSideTerms[0].getVariable(), 1);
     EXPECT_EQ(rightSideTerms[1].getCoefficient(), 6);
-    EXPECT_EQ(rightSideTerms[1].getVariable()->variableNumber, 2);
+    EXPECT_EQ(rightSideTerms[1].getVariable(), 2);
 }

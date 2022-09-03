@@ -39,8 +39,8 @@ TEST(SolverTest, SimpleSystem)
     size_t nVariables = 3;
     auto variables = diophantus::model::make_variables(nVariables);
 
-    auto equation1 = makeEquation<NumT>(variables, {7, 12, 31}, 17);
-    auto equation2 = makeEquation<NumT>(variables, {3, 5, 14}, 7);
+    auto equation1 = diophantus::model::makeEquation<NumT>(variables, {7, 12, 31}, 17);
+    auto equation2 = diophantus::model::makeEquation<NumT>(variables, {3, 5, 14}, 7);
 
     auto equationSystem = EquationSystem(variables, {equation1, equation2});
 
@@ -61,8 +61,8 @@ TEST(SolverTest, Unsolvable)
     size_t nVariables = 3;
     auto variables = diophantus::model::make_variables(nVariables);
 
-    auto equation1 = makeEquation<NumT>(variables, {7, 21, 28}, 8);
-    auto equation2 = makeEquation<NumT>(variables, {3, 5, 14}, 7);
+    auto equation1 = diophantus::model::makeEquation<NumT>(variables, {7, 21, 28}, 8);
+    auto equation2 = diophantus::model::makeEquation<NumT>(variables, {3, 5, 14}, 7);
 
     auto equationSystem = EquationSystem(variables, {equation1, equation2});
 
@@ -77,7 +77,7 @@ TEST(SolverTest, Empty)
     size_t nVariables = 0;
     auto variables = diophantus::model::make_variables(nVariables);
 
-    auto equation1 = makeEquation<NumT>(variables, {}, 0);
+    auto equation1 = diophantus::model::makeEquation<NumT>(variables, {}, 0);
 
     auto equationSystem = EquationSystem(variables, {equation1});
 
@@ -93,7 +93,7 @@ TEST(SolverTest, Conflict)
     size_t nVariables = 1;
     auto variables = diophantus::model::make_variables(nVariables);
 
-    auto equation1 = makeEquation<NumT>(variables, {0}, 1);
+    auto equation1 = diophantus::model::makeEquation<NumT>(variables, {0}, 1);
 
     auto equationSystem = EquationSystem(variables, {equation1});
 

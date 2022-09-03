@@ -18,6 +18,6 @@ TEST(UtilTest, MakeVariables)
     EXPECT_EQ(variables.size(), nVariables);
     for (size_t i = 0; i < nVariables; ++i)
     {
-        EXPECT_EQ(variables[i]->variableNumber, i);
+        EXPECT_EQ(variables[i], i);
     }
 }

@@ -23,7 +23,7 @@ namespace diophantus::model
     class EquationSystem
     {
         public:
-            EquationSystem(const std::vector<std::shared_ptr<Variable>>& variables,
+            EquationSystem(const std::vector<Variable>& variables,
                            const std::vector<Equation<NumT>>& equations);
 
             // TODO: Better data structure?
@@ -36,7 +36,7 @@ namespace diophantus::model
              * Creates a new variable for use in the equation system.
              * @return pointer to the newly created variable
              */
-            const std::shared_ptr<Variable> addNewVariable();
+            Variable addNewVariable();
 
             /**
              * Substitute a variable by applying an assignment to all equations.
@@ -81,7 +81,7 @@ namespace diophantus::model
             }
 
         private:
-            std::vector<std::shared_ptr<Variable>> variables;
+            std::vector<Variable> variables;
             std::vector<Equation<NumT>> equations;
     };
 }
@@ -90,14 +90,13 @@ namespace diophantus::model
 namespace diophantus::model
 {
     template <numeric::BigInt NumT>
-    EquationSystem<NumT>::EquationSystem(const std::vector<std::shared_ptr<Variable>>& variables,
+    EquationSystem<NumT>::EquationSystem(const std::vector<Variable>& variables,
                                          const std::vector<Equation<NumT>>& equations) :
         variables(std::move(variables)),
         equations(std::move(equations))
     {}
 
     template <numeric::BigInt NumT>
-    // std::list<Equation<NumT>>& EquationSystem<NumT>::getEquations()
     std::vector<Equation<NumT>>& EquationSystem<NumT>::getEquations()
     {
         return equations;
@@ -116,12 +115,11 @@ namespace diophantus::model
     }
 
     template <numeric::BigInt NumT>
-    const std::shared_ptr<Variable> EquationSystem<NumT>::addNewVariable()
+    Variable EquationSystem<NumT>::addNewVariable()
     {
         unsigned int newVarNumber = variables.size();
-        auto newVar = std::make_shared<Variable>(newVarNumber);
-        variables.push_back(newVar);
-        return newVar;
+        variables.push_back(newVarNumber);
+        return newVarNumber;
     }
 
     template <numeric::BigInt NumT>

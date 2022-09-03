@@ -8,22 +8,20 @@
 
 namespace diophantus::model
 {
-    struct Variable;
-
     template <numeric::BigInt NumT>
     class Term
     {
         public:
-            Term<NumT>(const NumT& coefficient, const std::shared_ptr<Variable> variable);
+            Term<NumT>(const NumT& coefficient, const unsigned int variable);
 
             /**
              * Constructor which converts the long coefficient to a NumT.
              */
-            Term<NumT>(const long coefficient, const std::shared_ptr<Variable> variable);
+            Term<NumT>(const long coefficient, const unsigned int variable);
 
             // Getters
             const NumT& getCoefficient() const;
-            const std::shared_ptr<Variable> getVariable() const;
+            unsigned int getVariable() const;
 
             /**
              * Divides the coefficient by a divisor.
@@ -55,6 +53,6 @@ namespace diophantus::model
 
         private:
             NumT coefficient;
-            std::shared_ptr<Variable> variable;
+            unsigned int variable;
     };
 }

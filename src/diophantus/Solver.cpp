@@ -196,7 +196,7 @@ namespace diophantus
         // An assignment is relevant if its variable appears in the original equation system
         auto maxVariableNumber = nOriginalVariables;
         auto isRelevant = [maxVariableNumber](const auto& assignment) {
-            return assignment.variable->variableNumber < maxVariableNumber;
+            return assignment.variable < maxVariableNumber;
         };
 
         // Copy all assignments that are relevant to the original equation

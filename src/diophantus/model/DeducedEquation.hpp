@@ -15,7 +15,7 @@ namespace diophantus::model
     class DeducedEquation
     {
         public:
-            DeducedEquation(const std::shared_ptr<const Variable> variable,
+            DeducedEquation(const Variable variable,
                             const Sum<NumT>& rightSideTerms,
                             const NumT& rightSideConstant) :
                 variable(variable),
@@ -23,7 +23,7 @@ namespace diophantus::model
                 rightSideConstant(std::move(rightSideConstant))
             {}
 
-            const std::shared_ptr<const Variable> getVariable() const
+            Variable getVariable() const
             {
                 return variable;
             }
@@ -81,13 +81,13 @@ namespace diophantus::model
 
             friend std::ostream& operator<<(std::ostream& os, const DeducedEquation<NumT>& eq)
             {
-                os << "x[" << eq.variable->variableNumber << "] = "
+                os << "x[" << eq.variable << "] = "
                    << eq.rightSideTerms << " + " << eq.rightSideConstant;
                 return os;
             }
 
         private:
-            const std::shared_ptr<const Variable> variable;
+            const Variable variable;
             Sum<NumT> rightSideTerms;
             NumT rightSideConstant;
     };

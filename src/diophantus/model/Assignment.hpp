@@ -13,14 +13,14 @@ namespace diophantus::model
     template <numeric::BigInt NumT>
     struct Assignment
     {
-        const std::shared_ptr<const Variable> variable;
+        const Variable variable;
         const NumT value;
     };
 
     template <numeric::BigInt NumT>
     std::ostream &operator<<(std::ostream &os, const Assignment<NumT>& assignment)
     {
-        os << "x" << assignment.variable->variableNumber << " = " << assignment.value;
+        os << "x" << assignment.variable << " = " << assignment.value;
         return os;
     }
 

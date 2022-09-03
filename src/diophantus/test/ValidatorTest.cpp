@@ -39,14 +39,14 @@ class ValidatorTest:
         {
             size_t nVariables = 3;
             variables = diophantus::model::make_variables(nVariables);
-            auto equation1 = makeEquation<NumT>(variables, {7, 12, 31}, 17);
-            auto equation2 = makeEquation<NumT>(variables, {3, 5, 14}, 7);
+            auto equation1 = diophantus::model::makeEquation<NumT>(variables, {7, 12, 31}, 17);
+            auto equation2 = diophantus::model::makeEquation<NumT>(variables, {3, 5, 14}, 7);
             auto equationSystem = EquationSystem(variables, {equation1, equation2});
 
             validator = std::make_unique<Validator>(equationSystem);
         }
 
-        std::vector<std::shared_ptr<Variable>> variables;
+        std::vector<Variable> variables;
         std::unique_ptr<Validator> validator;
 };
 

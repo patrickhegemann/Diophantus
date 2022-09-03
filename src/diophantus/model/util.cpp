@@ -9,24 +9,23 @@
 
 namespace diophantus::model
 {
-    std::vector<std::shared_ptr<Variable>> make_variables(size_t nVariables)
+    std::vector<unsigned int> make_variables(size_t nVariables)
     {
-        std::vector<std::shared_ptr<Variable>> variables;
+        std::vector<unsigned int> variables;
         variables.reserve(nVariables);
 
         for (size_t i = 0; i < nVariables; ++i)
         {
-            const auto variable = std::make_shared<Variable>(static_cast<unsigned int>(i));
-            variables.push_back(std::move(variable));
+            variables.push_back(i);
         }
 
         return variables;
     }
 
     template <numeric::BigInt NumT>
-    Equation<NumT> makeEquation(const std::vector<std::shared_ptr<Variable>>& variables,
-                      const std::vector<long>& coefficients,
-                      const long rightSide)
+    Equation<NumT> makeEquation(const std::vector<Variable>& variables,
+                                const std::vector<long>& coefficients,
+                                const long rightSide)
     {
         assert(coefficients.size() == variables.size());
 
@@ -43,7 +42,7 @@ namespace diophantus::model
     }
 
     template Equation<numeric::GmpBigInt> makeEquation<numeric::GmpBigInt>(
-        const std::vector<std::shared_ptr<Variable>> &variables,
+        const std::vector<Variable> &variables,
         const std::vector<long> &coefficients,
         const long rightSide);
 }

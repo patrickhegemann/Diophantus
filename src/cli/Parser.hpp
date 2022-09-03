@@ -59,7 +59,7 @@ namespace cli
         template<diophantus::model::numeric::BigInt NumT>
         std::optional<diophantus::model::EquationSystem<NumT>> parse(std::filesystem::path path)
         {
-            std::vector<std::shared_ptr<diophantus::model::Variable>> variables;
+            std::vector<diophantus::model::Variable> variables;
             std::vector<diophantus::model::Equation<NumT>> equations;
 
             std::ifstream file;

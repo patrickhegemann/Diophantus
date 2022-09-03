@@ -7,13 +7,5 @@
 
 namespace diophantus::model
 {
-    struct Variable
-    {
-        public:
-            Variable(unsigned int variableNumber) :
-                variableNumber(variableNumber)
-            {}
-
-            const unsigned int variableNumber;
-    };
+    typedef unsigned int Variable;
 }

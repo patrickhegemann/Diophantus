@@ -76,7 +76,7 @@ namespace diophantus::model
              * @returns a deduced equation relating the old and new variable to each other.
              */
             DeducedEquation<NumT> eliminate(const Term<NumT>& term,
-                                            const std::shared_ptr<Variable> newVariable);
+                                            const Variable newVariable);
 
             /**
              * Substitute a variable in the equation by an expression (sum).

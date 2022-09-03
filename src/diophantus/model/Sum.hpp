@@ -26,8 +26,6 @@ namespace diophantus::model
     template <numeric::BigInt NumT>
     class Sum
     {
-        // TODO: Chose more suitable data structures
-
         public:
             explicit Sum<NumT>(const std::vector<Term<NumT>>& terms) :
                 terms(std::move(terms))
@@ -127,16 +125,14 @@ namespace diophantus::model
              * @return The old coefficient of the variable, if it is present in the sum.
              *         nullopt, otherwise.
              */
-            const std::optional<NumT> setCoefficientOfVariableToZero(const std::shared_ptr<const Variable> var)
+            const std::optional<NumT> setCoefficientOfVariableToZero(const Variable var)
             {
                 // Search for the first (and only) term with this variable
                 auto variableMatches = [var](const Term<NumT>& term)
                 {
                     return (term.getVariable() == var);
                 };
-                const auto& varTerm = std::find_if(//std::execution::par,
-                                                   terms.begin(), terms.end(),
-                                                   variableMatches);
+                const auto& varTerm = std::find_if(terms.begin(), terms.end(), variableMatches);
 
                 if (varTerm == terms.end())
                 {
@@ -180,7 +176,7 @@ namespace diophantus::model
                     else
                     {
                         os <<  "(" << term.getCoefficient() << ")*"
-                           << "x[" << term.getVariable()->variableNumber << "]";
+                           << "x[" << term.getVariable() << "]";
                     }
                 }
 

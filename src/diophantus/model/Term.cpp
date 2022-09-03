@@ -7,13 +7,13 @@
 namespace diophantus::model
 {
     template <numeric::BigInt NumT>
-    Term<NumT>::Term(const NumT& coefficient, const std::shared_ptr<Variable> variable) :
+    Term<NumT>::Term(const NumT& coefficient, const Variable variable) :
         coefficient(std::move(coefficient)),
         variable(std::move(variable))
     {}
 
     template <numeric::BigInt NumT>
-    Term<NumT>::Term(const long coefficient, const std::shared_ptr<Variable> variable) :
+    Term<NumT>::Term(const long coefficient, const Variable variable) :
         coefficient(NumT(coefficient)),
         variable(std::move(variable))
     {}
@@ -25,7 +25,7 @@ namespace diophantus::model
     }
 
     template <numeric::BigInt NumT>
-    const std::shared_ptr<Variable> Term<NumT>::getVariable() const
+    Variable Term<NumT>::getVariable() const
     {
         return variable;
     }
