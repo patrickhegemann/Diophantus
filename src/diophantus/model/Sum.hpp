@@ -2,6 +2,7 @@
 
 #include "Term.hpp"
 
+#include <compare>
 #include <diophantus/model/Variable.hpp>
 #include <diophantus/model/numeric/GmpBigInt.hpp>
 #include <diophantus/model/numeric/BigInt.hpp>
@@ -51,12 +52,11 @@ namespace diophantus::model
                 // Find term with the minimum absolute coefficient other than zero
                 auto compareAbsolute = [](const Term<NumT>& a, const Term<NumT> &b)
                 {
-                    bool aIsLower = NumT::abs(a.getCoefficient()) < NumT::abs(b.getCoefficient());
+                    bool aIsLower = a.getCoefficient().absCmp(b.getCoefficient()) == std::strong_ordering::less;
                     return aIsLower && (a.getCoefficient() != 0);
                 };
 
-                return *std::min_element(std::execution::par, terms.begin(),terms.end(),
-                                        compareAbsolute);
+                return *std::min_element(terms.begin(), terms.end(), compareAbsolute);
             }
 
             /**
@@ -68,12 +68,11 @@ namespace diophantus::model
                 // Find term with the maximum absolute coefficient other than zero
                 auto compareAbsolute = [](const Term<NumT>& a, const Term<NumT> &b)
                 {
-                    bool aIsLower = NumT::abs(a.getCoefficient()) < NumT::abs(b.getCoefficient());
+                    bool aIsLower = a.getCoefficient().absCmp(b.getCoefficient()) == std::strong_ordering::less;
                     return aIsLower || (a.getCoefficient() == 0);
                 };
 
-                return *std::max_element(std::execution::par, terms.begin(), terms.end(),
-                                         compareAbsolute);
+                return *std::max_element(terms.begin(), terms.end(), compareAbsolute);
             }
 
             /**
@@ -135,7 +134,7 @@ namespace diophantus::model
                 {
                     return (term.getVariable() == var);
                 };
-                const auto& varTerm = std::find_if(std::execution::par,
+                const auto& varTerm = std::find_if(//std::execution::par,
                                                    terms.begin(), terms.end(),
                                                    variableMatches);
 
@@ -150,10 +149,9 @@ namespace diophantus::model
                     // TODO: Remove term instead? Depending on the data structure
                     // return std::exchange(varTerm->coefficient, NumT(0));
 
-                    NumT oldCoefficient(varTerm->getCoefficient());
+                    NumT oldCoefficient{varTerm->getCoefficient()};
                     varTerm->setCoefficientToZero();
                     return oldCoefficient;
-                    
                 }
             }
 

@@ -142,11 +142,11 @@ namespace diophantus::model
             if (dtIterator != deducedTerms.end() && etIterator != equationTerms.end()
                 && dtIterator->getVariable() == etIterator->getVariable())
             {
-                NumT coeff = etIterator->getCoefficient()
-                             + dtIterator->getCoefficient() * varCoefficient.value();
+                NumT coeff{etIterator->getCoefficient()
+                            + dtIterator->getCoefficient() * varCoefficient.value()};
                 if (coeff != 0)
                 {
-                    Term<NumT> term(coeff, dtIterator->getVariable());
+                    Term<NumT> term(std::move(coeff), dtIterator->getVariable());
                     newTerms.push_back(std::move(term));
                 }
                 ++dtIterator;

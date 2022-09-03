@@ -1,5 +1,6 @@
 #include "Solver.hpp"
 
+#include "diophantus/model/numeric/GmpBigInt.hpp"
 #include "model/Assignment.hpp"
 #include "model/Equation.hpp"
 #include "model/EquationSystem.hpp"
@@ -12,6 +13,7 @@
 
 #include <algorithm>
 #include <bits/ranges_algo.h>
+#include <compare>
 #include <iterator>
 #include <memory>
 #include <optional>
@@ -24,7 +26,9 @@ namespace diophantus
     template <model::numeric::BigInt NumT>
     Solver<NumT>::Solver(const model::EquationSystem<NumT>& equationSystem) :
         equationSystem(std::move(equationSystem)),
-        nOriginalVariables(equationSystem.getVariableCount())
+        nOriginalVariables(equationSystem.getVariableCount()),
+        nOriginalEquations(equationSystem.getEquationCount()),
+        lastIterationNumberOfEquations(equationSystem.getEquationCount())
     {
     }
 
@@ -32,10 +36,6 @@ namespace diophantus
     std::optional<model::Solution<NumT>> Solver<NumT>::solve()
     {
         LOG_DEBUG << "Solving equation system: " << std::endl << equationSystem;
-
-        // TODO: Make max. iteration count a parameter
-        // constexpr unsigned int maxIterations = 100;
-        // for (unsigned int i = 0; i < maxIterations; ++i)
 
         for (unsigned int i = 0;; ++i)
         {
@@ -53,10 +53,8 @@ namespace diophantus
             }
 
             model::Equation<NumT>& currentEquation = pickEquation();
-            // LOG_DEBUG << "Picked equation:" << std::endl << currentEquation;
 
             const auto newEquation = deduceNewEquation(currentEquation);
-            // LOG_DEBUG << "Deduced equation: " << std::endl << newEquation;
 
             // TODO: Make more expressive
             if (newEquation.getRightSideSum().getTerms().size() == 0)
@@ -73,6 +71,13 @@ namespace diophantus
                 equationSystem.substitute(newEquation);
                 deducedEquations.push_back(newEquation);
             }
+
+            size_t nEquationsLeft = equationSystem.getEquationCount();
+            if (nEquationsLeft < lastIterationNumberOfEquations)
+            {
+                LOG_INFO << "Progress: " << nEquationsLeft << " / " << nOriginalEquations;
+            }
+            lastIterationNumberOfEquations = nEquationsLeft;
         }
 
         LOG_DEBUG << "Resubstituting...";
@@ -88,23 +93,13 @@ namespace diophantus
     template <model::numeric::BigInt NumT>
     model::Equation<NumT>& Solver<NumT>::pickEquation()
     {
-        // TODO: Refactor and clean up
         auto& equations = equationSystem.getEquations();
 
         auto minEquation = equations.begin();
         NumT minCoefficient = minEquation->getLowestCoefficientTerm().getCoefficient();
 
-        auto maxEquation = equations.begin();
-        NumT maxCoefficient = maxEquation->getHighestCoefficientTerm().getCoefficient();
-
-        // This is basically std::minmax_element...
         auto eqIterator = minEquation;
-        // if (eqIterator->getLeftSide().getTerms().size() == 1)
-        // {
-        //     return *eqIterator;
-        // }
 
-        // eqIterator++;
         for (uint currentIndex = 0; eqIterator != equations.end(); ++eqIterator, ++currentIndex)
         {
             if (eqIterator->getLeftSide().getTerms().size() == 1)
@@ -113,28 +108,17 @@ namespace diophantus
             }
 
             NumT thisMinCoefficient = eqIterator->getLowestCoefficientTerm().getCoefficient();
-            NumT thisMaxCoefficient = eqIterator->getHighestCoefficientTerm().getCoefficient();
-            if (NumT::abs(thisMinCoefficient) < NumT::abs(minCoefficient))
+            if (thisMinCoefficient.absCmp(minCoefficient) == std::strong_ordering::less)
             {
                 minEquation = eqIterator;
                 minCoefficient = thisMinCoefficient;
             }
-            else if (NumT::abs(thisMaxCoefficient) > NumT::abs(maxCoefficient))
-            {
-                maxEquation = eqIterator;
-                maxCoefficient = thisMaxCoefficient;
-            }
         }
 
-        LOG_DEBUG << "\tmax coefficient has " << NumT::nDigits(maxCoefficient) << " digits";
-
-        auto minCoefficientOnFirstEquation = equations.begin()->getLowestCoefficientTerm().getCoefficient();
-        LOG_DEBUG << "\tmin coefficient on first equation has " << NumT::nDigits(minCoefficientOnFirstEquation) << " digits";
-        auto maxCoefficientOnFirstEquation = equations.begin()->getHighestCoefficientTerm().getCoefficient();
-        LOG_DEBUG << "\tmax coefficient on first equation has " << NumT::nDigits(maxCoefficientOnFirstEquation) << " digits";
+        // LOG_DEBUG << "\tmax coefficient has " << NumT::nDigits(maxCoefficient) << " digits";
 
         // TODO: Find a better heuristic...
-        if (NumT::abs(minCoefficient) == 1)
+        if (minCoefficient.absCmp(model::numeric::GmpBigInt(1)) == std::strong_ordering::equal)
         {
             LOG_DEBUG << "Chose equation with coefficient 1";
             return *minEquation;

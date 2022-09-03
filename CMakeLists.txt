@@ -54,10 +54,10 @@ add_compile_options(-Wall -Wextra -Wpedantic)
 # add_compile_options(-v)
 
 # Release Flags
-# add_compile_options(-O3)
+add_compile_options(-O3)
 
 # Debug Flags
-add_compile_options(-g)
+# add_compile_options(-g)
 
 # add_link_options(-v)
 

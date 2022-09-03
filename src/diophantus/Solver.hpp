@@ -10,6 +10,7 @@
 #include "model/numeric/GmpBigInt.hpp"
 #include "model/numeric/BigInt.hpp"
 
+#include <cstddef>
 #include <optional>
 #include <random>
 
@@ -62,6 +63,7 @@ namespace diophantus
             std::vector<model::DeducedEquation<NumT>> deducedEquations;
             std::vector<model::Assignment<NumT>> assignments;
 
-            bool chooseMaxTermNext = false;
+            size_t nOriginalEquations;
+            size_t lastIterationNumberOfEquations;
     };
 }

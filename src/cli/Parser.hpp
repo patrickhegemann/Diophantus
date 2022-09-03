@@ -60,7 +60,7 @@ namespace cli
         std::optional<diophantus::model::EquationSystem<NumT>> parse(std::filesystem::path path)
         {
             std::vector<std::shared_ptr<diophantus::model::Variable>> variables;
-            std::list<diophantus::model::Equation<NumT>> equations;
+            std::vector<diophantus::model::Equation<NumT>> equations;
 
             std::ifstream file;
             file.exceptions(std::ifstream::badbit);

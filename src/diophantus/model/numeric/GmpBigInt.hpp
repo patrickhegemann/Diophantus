@@ -108,6 +108,14 @@ namespace diophantus::model::numeric
                 return GmpBigInt(absVal);
             }
 
+            std::strong_ordering absCmp(const GmpBigInt& other) const
+            {
+                int cmp = mpz_cmpabs(this->value.get_mpz_t(), other.value.get_mpz_t());
+                return cmp == 0 ? std::strong_ordering::equal
+                                : (cmp > 0 ? std::strong_ordering::greater
+                                           : std::strong_ordering::less);
+            }
+
             // Calculate greatest common divisor
             static const GmpBigInt gcd(const GmpBigInt& a, const GmpBigInt& b)
             {

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <compare>
 #include <cstddef>
 #include <string>
 
@@ -39,9 +40,16 @@ namespace diophantus::model::numeric
     };
 
     template<typename Number>
+    concept AbsoluteComparable = requires(Number a, Number b, std::strong_ordering r)
+    {
+        r = a.absCmp(b);
+    };
+
+    template<typename Number>
     concept BigInt = (InitializableFromLong<Number>
                    && InitializableFromString<Number>
                    && Show<Number>
                    && Comparable<Number>
-                   && Arithmetic<Number>);
+                   && Arithmetic<Number>
+                   && AbsoluteComparable<Number>);
 }

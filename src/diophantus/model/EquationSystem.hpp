@@ -24,11 +24,10 @@ namespace diophantus::model
     {
         public:
             EquationSystem(const std::vector<std::shared_ptr<Variable>>& variables,
-                           const std::list<Equation<NumT>>& equations);
+                           const std::vector<Equation<NumT>>& equations);
 
-            // TODO: this is not const.
-            // TODO: Pointers instead of references?
-            std::list<Equation<NumT>>& getEquations();
+            // TODO: Better data structure?
+            std::vector<Equation<NumT>>& getEquations();
 
             unsigned int getVariableCount() const;
             size_t getEquationCount() const;
@@ -83,7 +82,7 @@ namespace diophantus::model
 
         private:
             std::vector<std::shared_ptr<Variable>> variables;
-            std::list<Equation<NumT>> equations;
+            std::vector<Equation<NumT>> equations;
     };
 }
 
@@ -92,13 +91,14 @@ namespace diophantus::model
 {
     template <numeric::BigInt NumT>
     EquationSystem<NumT>::EquationSystem(const std::vector<std::shared_ptr<Variable>>& variables,
-                                         const std::list<Equation<NumT>>& equations) :
+                                         const std::vector<Equation<NumT>>& equations) :
         variables(std::move(variables)),
         equations(std::move(equations))
     {}
 
     template <numeric::BigInt NumT>
-    std::list<Equation<NumT>>& EquationSystem<NumT>::getEquations()
+    // std::list<Equation<NumT>>& EquationSystem<NumT>::getEquations()
+    std::vector<Equation<NumT>>& EquationSystem<NumT>::getEquations()
     {
         return equations;
     }
@@ -127,7 +127,6 @@ namespace diophantus::model
     template <numeric::BigInt NumT>
     void EquationSystem<NumT>::substitute(const Assignment<NumT>& assignment)
     {
-        // todo: pragma omp parallel?
         for (auto& eq : equations)
         {
             eq.substitute(assignment);
