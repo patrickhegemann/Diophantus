@@ -1,5 +1,5 @@
 add_library(dio_common
-    logging.h
+    logging.hpp
 )
 
 set_target_properties(dio_common
