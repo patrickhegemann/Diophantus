@@ -9,10 +9,10 @@ I used this project to learn more about C++20, GoogleTest, CMake, and more.
 ## Built with
 
 * C++20
-* gmp
-* googletest
-* boost
-* argparse
+* [GMP](https://gmplib.org/)
+* [GoogleTest](https://github.com/google/googletest)
+* [Boost](https://www.boost.org/)
+* [argparse](https://github.com/p-ranav/argparse)
 
 ## Setup
 
@@ -41,10 +41,11 @@ Run examples:
 ```shell
 ./bin/diophantus_cli examples/ex-5-5
 ./bin/diophantus_cli examples/ex-10-10
+./bin/diophantus_cli examples/ex-100-100
 ```
 
 ## References
 
-[1] Pugh, William. "The Omega test: a fast and practical integer programming algorithm for dependence analysis." Supercomputing'91: Proceedings of the 1991 ACM/IEEE conference on Supercomputing. IEEE, 1991.
+[1] Pugh, William. "The Omega Test: a fast and practical integer programming algorithm for dependence analysis." Supercomputing'91: Proceedings of the ACM/IEEE conference on Supercomputing, 1991.
 
-[2] Kroening, Daniel, and Ofer Strichman. Decision procedures. Springer-Verlag Berlin Heidelberg, 2016.
+[2] Kroening, Daniel, and Strichman, Ofer. "Decision Procedures: An Algorithmic Point of View." Springer-Verlag Berlin Heidelberg, 2016.

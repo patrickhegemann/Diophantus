@@ -12,6 +12,7 @@ RUN apt install -y \
 COPY etc /usr/src/diophantus/etc
 COPY src /usr/src/diophantus/src
 COPY CMakeLists.txt /usr/src/diophantus/CMakeLists.txt
+COPY examples /usr/src/diophantus/examples
 
 # Set up environment
 WORKDIR /usr/src/diophantus/build
