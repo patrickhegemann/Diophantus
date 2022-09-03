@@ -119,12 +119,9 @@ namespace diophantus::model::numeric
             // Calculate symmetric modulo
             static const GmpBigInt symMod(const GmpBigInt& a, const GmpBigInt& b)
             {
-                mpf_class halfB(b.value);
-                halfB /= 2;
-
                 mpz_class aModB;
                 mpz_mod(aModB.get_mpz_t(), a.value.get_mpz_t(), b.value.get_mpz_t());
-                if (aModB < halfB)
+                if (2 * aModB < b.value)
                 {
                     return GmpBigInt(aModB);
                 }
