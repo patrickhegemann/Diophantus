@@ -39,9 +39,9 @@ make
 
 Run examples:
 ```shell
-./bin/diophantus_cli examples/ex-5-5
-./bin/diophantus_cli examples/ex-10-10
-./bin/diophantus_cli examples/ex-100-100
+./bin/diophantus_cli ../examples/ex-5-5
+./bin/diophantus_cli ../examples/ex-10-10
+./bin/diophantus_cli ../examples/ex-100-100
 ```
 
 ## References
