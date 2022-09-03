@@ -10,10 +10,10 @@
 
 #include <argparse/argparse.hpp>
 
+#include <optional>
 #include <iostream>
-#include <stdexcept>
+#include <exception>
 #include <string>
-
 
 int main(int argc, char *argv[])
 {
@@ -24,41 +24,42 @@ int main(int argc, char *argv[])
         .required();
 
     program.add_argument("-v", "--verbosity")
-        .help("logging verbosity level")
-        .scan<'i', int>()
-        .default_value(0);
+        .help("logging verbosity level (between 0 and 5)")
+        .scan<'i', unsigned int>()
+        .default_value(3u);
 
     try
     {
         program.parse_args(argc, argv);
+        setLoggingLevel(program.get<unsigned int>("--verbosity"));
     }
-    catch (const std::runtime_error& err)
+    catch (const std::exception& err)
     {
-        std::cerr << err.what() << std::endl;
-        std::cerr << program;
-        std::exit(1);
-    }
-    catch (const std::invalid_argument& err)
-    {
-        std::cerr << err.what() << std::endl;
-        std::cerr << program;
+        std::cerr << err.what() << std::endl << program;
         std::exit(1);
     }
 
+    // Parse input file to get equation system to solve
     auto inputFile = program.get<std::string>("filename");
-    std::cout << inputFile << std::endl;
-
-    // std::cout << "verbosity level: " << program.get<int>("--verbosity") << std::endl;
-
     cli::Parser parser;
     using NumT = diophantus::model::numeric::GmpBigInt;
+    using EquationSystem = diophantus::model::EquationSystem<NumT>;
     std::filesystem::path inputPath{inputFile};
-    diophantus::model::EquationSystem<NumT> equationSystem = parser.parse<NumT>(inputPath);
-    
-    using Solver = diophantus::Solver<NumT>;
-    Solver solver(equationSystem);
+    LOG_INFO << "Parsing input file.";
+    std::optional<EquationSystem> equationSystem = parser.parse<NumT>(inputPath);
 
-    std::optional<diophantus::model::Solution<NumT>> solution = solver.solve();
+    if (!equationSystem.has_value())
+    {
+        LOG_FATAL << "No input equation system. Exiting.";
+        std::exit(1);
+    }
+    
+    // Solve equation system and output the result
+    using Solver = diophantus::Solver<NumT>;
+    using Solution = diophantus::model::Solution<NumT>;
+    Solver solver(equationSystem.value());
+    LOG_INFO << "Solving equation system.";
+    std::optional<Solution> solution = solver.solve();
     if (solution.has_value())
     {
         LOG_INFO << "Solution found. Checking solution:";
@@ -66,7 +67,7 @@ int main(int argc, char *argv[])
         {
             LOG_INFO << x;
         }
-        diophantus::Validator<NumT> validator(equationSystem);
+        diophantus::Validator<NumT> validator(equationSystem.value());
         if (validator.isValidSolution(solution.value()))
         {
             LOG_INFO << "Solution validated.";

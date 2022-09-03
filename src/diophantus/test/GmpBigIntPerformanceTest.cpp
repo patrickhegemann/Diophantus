@@ -28,7 +28,7 @@ TEST(GmpBigIntPerformanceTest, ModuloTestMeasureTime)
 
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime).count();
 
-    std::cout << "Measured time for " << nCalls << " calls of Number::modOffset: "
+    std::cout << "Measured time for " << nCalls << " calls of Number::symMod: "
               << duration << " us" << std::endl;
 
     float averageCallTime = duration / static_cast<float>(nCalls);

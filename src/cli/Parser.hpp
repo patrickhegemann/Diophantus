@@ -16,6 +16,7 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
+#include <optional>
 #include <ranges>
 #include <string>
 #include <utility>
@@ -56,7 +57,7 @@ namespace cli
     {
     public:
         template<diophantus::model::numeric::BigInt NumT>
-        diophantus::model::EquationSystem<NumT> parse(std::filesystem::path path)
+        std::optional<diophantus::model::EquationSystem<NumT>> parse(std::filesystem::path path)
         {
             std::vector<std::shared_ptr<diophantus::model::Variable>> variables;
             std::list<diophantus::model::Equation<NumT>> equations;
@@ -142,6 +143,7 @@ namespace cli
             {
                 LOG_ERROR << "Error reading file: " << path;
                 LOG_ERROR << e.what();
+                return std::nullopt;
             }
 
             return diophantus::model::EquationSystem<NumT>(variables, equations);

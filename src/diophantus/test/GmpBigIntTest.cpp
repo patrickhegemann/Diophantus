@@ -68,7 +68,7 @@ TEST(GmpBigIntTest, GCD)
     EXPECT_EQ(Number::gcd(a, b), 40);
 }
 
-TEST(GmpBigIntTest, ModOffset)
+TEST(GmpBigIntTest, SymMod)
 {
     EXPECT_EQ(Number::symMod(Number(10), Number(5)), 0);
     EXPECT_EQ(Number::symMod(Number(11), Number(5)), 1);
