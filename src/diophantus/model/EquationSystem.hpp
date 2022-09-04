@@ -26,7 +26,6 @@ namespace diophantus::model
             EquationSystem(const std::vector<Variable>& variables,
                            const std::vector<Equation<NumT>>& equations);
 
-            // TODO: Better data structure?
             std::vector<Equation<NumT>>& getEquations();
 
             unsigned int getVariableCount() const;
@@ -57,7 +56,6 @@ namespace diophantus::model
              * other equations.
              */
             SimplificationResult simplify();
-
 
             friend std::ostream& operator<<(std::ostream& os, const EquationSystem<NumT>& system)
             {

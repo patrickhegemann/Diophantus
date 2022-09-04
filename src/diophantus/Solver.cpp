@@ -40,7 +40,6 @@ namespace diophantus
         for (unsigned int i = 0;; ++i)
         {
             LOG_DEBUG << "Iteration " << i;
-            LOG_DEBUG << "\tNumber of equations left: " << equationSystem.getEquationCount();
 
             model::SimplificationResult result = equationSystem.simplify();
             if (result == model::SimplificationResult::Conflict)
@@ -75,7 +74,7 @@ namespace diophantus
             size_t nEquationsLeft = equationSystem.getEquationCount();
             if (nEquationsLeft < lastIterationNumberOfEquations)
             {
-                LOG_INFO << "Progress: " << nEquationsLeft << " / " << nOriginalEquations;
+                LOG_INFO << "Progress: " << nEquationsLeft << " / " << nOriginalEquations << " (Iteration " << i << ")";
             }
             lastIterationNumberOfEquations = nEquationsLeft;
         }
@@ -115,19 +114,7 @@ namespace diophantus
             }
         }
 
-        // LOG_DEBUG << "\tmax coefficient has " << NumT::nDigits(maxCoefficient) << " digits";
-
-        // TODO: Find a better heuristic...
-        if (minCoefficient.absCmp(model::numeric::GmpBigInt(1)) == std::strong_ordering::equal)
-        {
-            LOG_DEBUG << "Chose equation with coefficient 1";
-            return *minEquation;
-        }
-        else
-        {
-            LOG_DEBUG << "Chose first equation";
-            return *equations.begin();
-        }
+        return *minEquation;
     }
 
     template <model::numeric::BigInt NumT>
