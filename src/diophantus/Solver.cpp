@@ -24,7 +24,8 @@
 namespace diophantus
 {
     template <model::numeric::BigInt NumT>
-    Solver<NumT>::Solver(const model::EquationSystem<NumT>& equationSystem) :
+    Solver<NumT>::Solver(const model::EquationSystem<NumT>& equationSystem, const Parameters& parameters) :
+        parameters(std::move(parameters)),
         equationSystem(std::move(equationSystem)),
         nOriginalVariables(equationSystem.getVariableCount()),
         nOriginalEquations(equationSystem.getEquationCount()),
@@ -72,7 +73,7 @@ namespace diophantus
             }
 
             size_t nEquationsLeft = equationSystem.getEquationCount();
-            if (nEquationsLeft < lastIterationNumberOfEquations)
+            if (parameters.doShowProgress && nEquationsLeft < lastIterationNumberOfEquations)
             {
                 LOG_INFO << "Progress: " << nEquationsLeft << " / " << nOriginalEquations << " (Iteration " << i << ")";
             }

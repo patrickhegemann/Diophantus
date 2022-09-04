@@ -20,7 +20,14 @@ namespace diophantus
     class Solver
     {
         public:
-            explicit Solver(const model::EquationSystem<NumT>& equationSystem);
+            struct Parameters
+            {
+                // whether to log the progress of the solver during solving
+                bool doShowProgress = false;
+            };
+
+        public:
+            explicit Solver(const model::EquationSystem<NumT>& equationSystem, const Parameters& parameters = Parameters());
 
             /**
              * Solves the given equation system.
@@ -57,6 +64,8 @@ namespace diophantus
             const model::Solution<NumT> getSolutionFromAssignments() const;
 
         private:
+            const Parameters parameters;
+
             model::EquationSystem<NumT> equationSystem;
             size_t nOriginalVariables;
 
@@ -65,5 +74,7 @@ namespace diophantus
 
             size_t nOriginalEquations;
             size_t lastIterationNumberOfEquations;
+
+            
     };
 }
